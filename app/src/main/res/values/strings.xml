@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">AppMeteo</string>
+    <string name="createcity_title">New city name ?</string>
+    <string name="createcty_positive">Create city</string>
+    <string name="createcity_negative">Cancel</string>
+    <string name="createcity_cityhint">New York, London ...</string>
+    <string name="menu_create_city">menu_create_city</string>
+</resources>
