@@ -9,8 +9,15 @@ import android.widget.Toast
 import com.marisa.guillaume.appmeteo.App
 import com.marisa.guillaume.appmeteo.DataBase
 import com.marisa.guillaume.appmeteo.R
+import com.marisa.guillaume.appmeteo.utils.toast
 
 class CityFragment : Fragment(), CityAdapteur.CityItemListener {
+
+    interface CityFragmentListener{
+        fun onCitySelected(city: City)
+    }
+
+    var listener: CityFragmentListener? = null
 
     private lateinit var database : DataBase
     private lateinit var cities: MutableList<City>
@@ -40,7 +47,7 @@ class CityFragment : Fragment(), CityAdapteur.CityItemListener {
     }
 
     override fun onCitySelected(city: City) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        listener?.onCitySelected(city)
     }
 
     override fun onCityDeleted(city: City) {
@@ -61,10 +68,6 @@ class CityFragment : Fragment(), CityAdapteur.CityItemListener {
         }
 
         deleteCityFragment.show(fragmentManager,"DeleteCityDialogFragment")
-    }
-
-    private fun deleteCity(city: City) {
-
     }
 
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
@@ -105,8 +108,19 @@ class CityFragment : Fragment(), CityAdapteur.CityItemListener {
             adapteur.notifyDataSetChanged()
         }
         else{
-            Toast.makeText(context,"Could not create city",Toast.LENGTH_SHORT).show()
+            context.toast(getString(R.string.city_message_error_could_not_create_city),Toast.LENGTH_SHORT)
         }
     }
 
+
+    private fun deleteCity(city: City) {
+        if(database.deleteCity(city)){
+            cities.remove(city)
+            adapteur.notifyDataSetChanged()
+            context.toast(getString(R.string.city_message_info_city_deleted,city.name),Toast.LENGTH_SHORT)
+        }
+        else{
+            context.toast(getString(R.string.city_message_error_could_not_delete_city,city.name),Toast.LENGTH_SHORT)
+        }
+    }
 }

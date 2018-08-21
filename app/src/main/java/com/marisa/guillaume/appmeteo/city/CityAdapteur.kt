@@ -2,6 +2,7 @@ package com.marisa.guillaume.appmeteo.city
 
 import android.support.v7.widget.CardView
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -36,7 +37,7 @@ class CityAdapteur(private val cities: List<City>, private val cityListener: Cit
         val city = cities[position]
         with(holder){
             cardView.tag = city
-            cardView.setOnClickListener { this@CityAdapteur }
+            cardView.setOnClickListener(this@CityAdapteur)
             cityNameView.text = city.name
             deleteView.tag = city
             deleteView.setOnClickListener(this@CityAdapteur)
@@ -45,6 +46,9 @@ class CityAdapteur(private val cities: List<City>, private val cityListener: Cit
     }
 
     override fun onClick(view: View){
+
+        Log.d("TAG","touch")
+
         when(view.id){
             R.id.card_view -> cityListener.onCitySelected(view.tag as City)
             R.id.delete -> cityListener.onCityDeleted(view.tag as City)
