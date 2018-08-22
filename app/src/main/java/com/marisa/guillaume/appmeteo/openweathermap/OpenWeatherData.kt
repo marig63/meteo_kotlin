@@ -8,6 +8,6 @@ data class WeatherWrapper(val weather: Array<WeatherData>,
 data class WeatherData(val description: String,
                        val icon : String)
 
-data class MainData(@SerializedName("temp") val temperature:String,
+data class MainData(@SerializedName("temp") val temperature:Float,
                     val pressure: Int,
                     val humidity: Int)
